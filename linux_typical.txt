@@ -1,0 +1,189 @@
+linux  
+
+sudo  netstat -tulpn | grep :<port>
+
+https://classroom.udacity.com/courses/ud299/lessons/4331066009/concepts/48010894810923
+
+	vagrant:
+	vagrant init ubuntu/trusty64 t
+    vagrant up 
+	vagrant status
+    vagrant suspend
+    vagrant ssh
+    vagrant halt
+    vagrant destroy
+
+    in Vagrantfile uncomment 
+    config.vm.network "forwarded_port", guest: 80, host: 8080
+
+
+
+dirs
+	 /home - home dir
+	 /media - devices
+	 /etc - configuration files
+	 /bin - binaries for all users
+	 /sbin -//- root only  
+	 /var - logs 
+	 /usr - user programs
+	 .bashrc
+	 .profile
+	 /home/<newusername> homedir craeted user 
+
+$PATH - places to look for binaries
+	echo $PATH
+	/home/admin/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+
+/etc/password
+	keeps user information:
+	<username>:x:userid:groupid:userdescription:homedir:defaultshell
+
+editors
+	cat
+	nano
+	less
+
+packages
+	useful 
+		finger
+
+	sources
+		/etc/apt/sources.list
+		sudo apt-get update
+		sudo apt-get upgrade
+		sudo apt-get autoremove
+		sudo apt-get intall <packname>
+
+
+raw os:
+	sudo adduser <username>
+	
+	finger <username> #optional 
+	add <username> sudo permission:
+		sudo cat /etc/sudoers # list of sudo users 
+		sudo cp /etc/sudoers.d/<some existing file>  /etc/sudoers.d/<usename> 
+		sudo nano /etc/sudoers.d/<usename>
+			<username> ALL=(ALL) NOPASSWORD:ALL #replace in file <some existing user> to <username>
+	
+	user passwort reset:
+		sudo passwd -e <username>  #expire old password
+
+	adding ssh auth:
+		ssh-keygen
+		keep keys in home/<username>/.ssh/id_rsa
+		mkdir .ssh # in homedir
+		touch .ssh/authorized_keys 
+		chmod 700 .ssh
+		chmod 644 .ssh/authorized_keys
+		copy pub_key from home/<username>/.ssh/id_rsa.pub to authorized_keys
+
+	deactivate pass auth:
+		sudo nano /etc/ssh/sshd_config
+			PasswordAuthentication no
+		sudo service ssh restart
+
+	permissions:
+
+		chmod
+			drwxrwxrwx <owner> <group> <size> <date> <filename>
+
+			1 section d-dir - file
+			2 section owner
+			3 group
+			4 everyone
+	                                      octal
+			1| 2 | 3 | 4    r-read        4
+			-|---|---|---   w-write       2
+			d|rwx|rwx|rwx   x-execute     1
+	                        -             0 
+	        rw = 6  (r+w = 4+2)
+	        rwx = 7 (r+w+x = 4+2+1)
+	        -rwxrwxrwx = (4+2+1 4+2+1 4+2+1) = 777
+
+	    chgrp
+	    	sudo chgrp <groupname> <filename>
+
+	    chown
+	    	sudo chown <groupname> <filename>
+
+
+	firewall
+		...is controlling which port allow to accept request*
+
+				* just because server can listen on any port for 
+			any request that doesn't mean it should
+			listen only on reqiered port
+
+			  port	      port
+		ftp   21    http  80
+		https 443   pop3  110 
+		smtp  25    ssh   22
+
+		Ubuntu default firewall:
+			ufw
+			sudo ufw status
+			sudo ufw default deny incoming #closing all 
+			sudo ufw default allow outgoing
+			sudo ufw allow ssh
+			sudo ufw allow 2222/tcp # ssh for vagrant as tcp on p2222
+			sudo ufw allow www
+			sudo ufw enable 
+			sudo ufw status
+
+		install apache
+			sudo apt-get install apache2
+
+			check Apache is working by visiting http://localhost:8080
+
+			Apache, by default, serves its files from the /var/www/html directory. If you explore this directory you will find a file called index.html and if you review that file you will see it contains the HTML of the page you see when you visit http://localhost:8080.
+
+		mod_wsgi
+			sudo apt-get install libapache2-mod-wsgi
+			sudo nano /etc/apache2/sites-enabled/000-default.conf
+				# add 
+					WSGIScriptAlias / /var/www/html/myapp.wsgi
+				#  right before the closing </VirtualHost>  
+
+				# docs https://httpd.apache.org/docs/2.2/configuring.html
+			sudo apache2ctl restart 
+
+		test wsgi app
+			touch  /var/www/html/myapp.wsgi
+			sudo nano /var/www/html/myapp.wsgi
+
+				def application(environ, start_response):
+				    status = '200 OK'
+				    output = 'Hello World!'
+
+				    response_headers = [('Content-type', 'text/plain'), ('Content-Length', str(len(output)))]
+				    start_response(status, response_headers)
+
+				    return [output]
+			save
+			http://localhost:8080   => helloworld
+
+		installing potgresql
+			sudo apt-get install postgresql.
+
+
+
+
+	How To Run Your Own Mail Server and File Storage with PEPS on Ubuntu 14.04
+		https://www.digitalocean.com/community/tutorials/how-to-run-your-own-mail-server-and-file-storage-with-peps-on-ubuntu-14-04
+
+	How To Install the Lita Chat Bot for IRC on Ubuntu 14.04 
+		https://www.digitalocean.com/community/tutorials/how-to-install-the-lita-chat-bot-for-irc-on-ubuntu-14-04
+
+	How To Run Your Own Mail Server with Mail-in-a-Box on Ubuntu 14.04
+		https://www.digitalocean.com/community/tutorials/how-to-run-your-own-mail-server-with-mail-in-a-box-on-ubuntu-14-04
+
+
+
+
+
+
+
+
+
+
+
