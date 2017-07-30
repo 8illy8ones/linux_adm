@@ -1,3 +1,6 @@
+1st ed:
+	http://ptgmedia.pearsoncmg.com/images/9780321833884/samplepages/9780321833884.pdf 
+
 linux cli:
 
 alias 	
@@ -38,7 +41,14 @@ chgrp #change croup
 	chgrp -R <grpname> <filename> #recursive
 
 chmod #
+	chmod -R <rules> <file/dir(s)> #recursive
+	chmod <suid><0-7><0-7><0-7> #suid is optional
+
 	drwxrwxrwx <owner> <group> <size> <date> <filename>
+
+	suid execute with owners rights(could ask pass)
+	sgid execute with group rights(could ask pass)
+
 
 	1 section d-dir - file
 	2 section owner
@@ -48,22 +58,64 @@ chmod #
 	1| 2 | 3 | 4    r-read        4
 	-|---|---|---   w-write       2
 	d|rwx|rwx|rwx   x-execute     1
-                    -             0 
+                    -             0
+                    s-suid set
+                    g-guid set
     rw = 6  (r+w = 4+2)
     rwx = 7 (r+w+x = 4+2+1)
     -rwxrwxrwx = (4+2+1 4+2+1 4+2+1) = 777
+
+    chmod <ugo> <+-=> <rwx>
+    	u user     + add rights 
+    	g group    - remove rights    
+    	o others   = set exact rights
+
+    chmod go+w <filename> #allow group users and others to edit file
+    chmod a=rw <filename> #same
+
+    suid 
+    	can't be set to dir
+	    chmod u<+/->s <filename> #set/remove suid
+	    chmod 4<0-7><0-7><0-7> <filename>
+	    	4<0-7><0-7><0-7> - set suid
+	    	0<0-7><0-7><0-7> - remove suid 
+
+	sgid 
+    	can be set to dir
+	    chmod g<+/->s <filename> #set/remove sgid
+	    chmod 4<0-7><0-7><0-7> <filename>
+	    	2<0-7><0-7><0-7> - set sgid
+	    	0<0-7><0-7><0-7> - remove sgid
 
 chown 
 	chown <owner> <filename>
 	chown <owner>:<group> <filename>
 	chown :<group> <filename> # same as chgrp 
 
-clear
-cp -v -i -a -R
-cut
-df -h
+clear #clear screen
+
+cp 
+	cp <flag(s)> <(from)filename> <(to)filename>
+		-v verbose
+		-i interactive
+		-R recursive
+		-a archive
+
+cut # print column from formated text
+	cut -d '.' -f 3
+	-f <1,5/1-5>columns
+	-d <'.'> delimiter
+
+df #show whole HDD usage (disk space)
+	-h #in human readable format
+	
 dpkg
-du  -h
+
+du  show directory space usage (size)
+	-h #in human readable format
+	-a all
+	-s sum. size 
+
 echo
 file
 find
@@ -123,7 +175,3 @@ $()
 >>
 <
 >
-
-sudo pacman -S docker
-sudo systemctl start docker
-sudo systemctl status docker

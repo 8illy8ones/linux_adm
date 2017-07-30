@@ -1,0 +1,12 @@
+
+sudo pacman -S docker # arch/manjaro install
+
+sudo systemctl start docker 
+sudo systemctl status docker
+
+let's assume you have installed docker 
+that's it we can start 
+
+further information  makes sens only for docker nubies:
+	
+	   
