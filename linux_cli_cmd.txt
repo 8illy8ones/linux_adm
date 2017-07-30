@@ -1,0 +1,129 @@
+linux cli:
+
+alias 	
+	ex: alias <newalias>='cmd'
+		(temp alias to make it permanent add to one of files: ->)
+	 	 see ~/.bashrc .bashprofile .bash_aliases .extend.bashrc
+
+apt   appeared as interface for Debian dkpg  that resolves and install dependencies automaticly 
+	apt-get update  (uses /etc/apt/soursess.list  etc/apt/sourses.d)
+	apt-get upgrade (sudo )
+		apt-get update && apt-get upgrade  (alias upgrade='apt-get update && apt-get upgrade')
+	apt-get install <packagename packagename1 ... >  
+	apt-get remove <packagename>
+	apt-get --purge remove <packagename> #removes also cfgs 
+	apt --installed list # installed packages info 
+	apt-cache search <packagename>
+	apt-get clean #
+	apt-get autoclean #
+	apt-get autoremove #
+
+awk
+bgzip2 
+bunzip2
+
+
+cat   # output file to stdout
+	cat  <filename> # output file to stdout
+	cat  <filename filename2> # concatenete and output  stdout
+	cat  <filename filename2>  >  <filename3> #concatenete and save to file3 
+	cat -n  <filename> #show file with numerated lines 
+
+cd  #change dir
+	cd ~ 
+	cd -
+
+chgrp #change croup
+	chgrp <grpname> <filename>
+	chgrp -R <grpname> <filename> #recursive
+
+chmod #
+	drwxrwxrwx <owner> <group> <size> <date> <filename>
+
+	1 section d-dir - file
+	2 section owner
+	3 group
+	4 everyone
+                                  octal
+	1| 2 | 3 | 4    r-read        4
+	-|---|---|---   w-write       2
+	d|rwx|rwx|rwx   x-execute     1
+                    -             0 
+    rw = 6  (r+w = 4+2)
+    rwx = 7 (r+w+x = 4+2+1)
+    -rwxrwxrwx = (4+2+1 4+2+1 4+2+1) = 777
+
+chown 
+	chown <owner> <filename>
+	chown <owner>:<group> <filename>
+	chown :<group> <filename> # same as chgrp 
+
+clear
+cp -v -i -a -R
+cut
+df -h
+dpkg
+du  -h
+echo
+file
+find
+function
+grep 
+gunzip
+gzip
+head
+history 
+info 
+kill   -1 -15 -9 
+killall <processname>
+less
+locate  su   -i 
+ls -R -m -l -a -F -t -r -h -S --color 
+lsof   sudo lsof  -u 
+man -f -k 
+mkdir -p 
+multitail
+mv
+nl
+ps   aux  axjf  axuf  -w  U <username> 
+pstree
+pwd
+rm -i -R -f
+rpm
+sed
+slocate 
+sort
+sourse
+su 
+tail
+tar
+tee
+top  h k q
+touch -t  
+tr
+type -t -a 
+uniq
+unset
+unzip
+uptime
+wc
+whatis <commandname> 
+whereis
+which
+whoami
+whois
+yum 
+zip
+
+;
+|
+&&
+||
+$()
+>>
+<
+>
+
+sudo pacman -S docker
+sudo systemctl start docker
+sudo systemctl status docker
